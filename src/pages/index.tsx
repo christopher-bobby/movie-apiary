@@ -22,34 +22,32 @@ export default function Home({filmList}:any) {
 
 
 
-  //  const doesObjectExist = (id: any, arr: any) => {
-  //     if(!id) {
-  //       return null
-  //     }
-  //     return arr.some(obj => obj.id === id);
-  // }
+   const doesObjectExist = (id: any, arr: any) => {
+      if(!id) {
+        return null
+      }
+      return arr.some(obj => obj.id === id);
+  }
 
   const addFavourites = async(ev: any, film: any) => {
       ev.stopPropagation();
       let existingItemsJSON : any = [];
-
       if (typeof window !== 'undefined') {
         existingItemsJSON = localStorage.getItem('favourites') || []
       }
-    
       const existingFavourites = existingItemsJSON.length ? JSON.parse(existingItemsJSON) : [];
-    
-      const updatedItems = [...existingFavourites];
-
-      console.log("earlier updaedItems", updatedItems)
-
-    
-      let newFave = {...film};
-
-      await updatedItems.push(newFave);
-      console.log("updaedItems", updatedItems)
-      await localStorage.setItem('favourites', JSON.stringify(updatedItems));
-    
+      const isFilmFavourite = doesObjectExist(film.id, existingFavourites);
+      if(isFilmFavourite) {
+        const idToRemove = film.id;
+        const newFavourites = existingFavourites.filter(obj => obj.id !== idToRemove);
+        localStorage.setItem('favourites', JSON.stringify(newFavourites));
+      }
+      else {
+        const updatedItems = [...existingFavourites];    
+        let newFave = {...film};
+        updatedItems.push(newFave);
+        localStorage.setItem('favourites', JSON.stringify(updatedItems));
+      }
   }
 
   return (
