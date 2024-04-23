@@ -6,12 +6,12 @@ type Data = {
 };
 export const listOfFilms = async () => {
   let result = await fetch('https://private-2fff44-bncfetest.apiary-mock.com/movies');
-  const data = await result.json();
-  return data?.results || [];
+  const { data } = await result.json();
+  return data
 };
 
-export const filmDetail = async(movieId: string) => {
+export const getFilmDetail = async(movieId: string | undefined | string[]) => {
   let result = await fetch(`https://private-2fff44-bncfetest.apiary-mock.com/movies/${movieId}`);
-  const data = await result.json();
+  const { data } = await result.json();
   return data
 }
