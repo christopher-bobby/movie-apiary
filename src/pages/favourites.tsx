@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
+import { Film } from '@/types/types';
 
 const FavouritePage = () => {
-  console.log("pantek")
-  let currentFavourites : any = [];
+  let currentFavourites : SetStateAction<never[]> = [];
   if (typeof window !== 'undefined') {
     const existingFavourites = localStorage.getItem('favourites');
     currentFavourites = JSON.parse(existingFavourites || '') || []
@@ -17,10 +17,10 @@ const FavouritePage = () => {
 
 
 
-  const removeFromFavourites = async(ev: any, film: any) => {
+  const removeFromFavourites = async(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, film: Film) => {
     ev.stopPropagation();
     const idToRemove = film.id;
-    const newFavourites = favouritesLocalStorage.filter(obj => obj.id !== idToRemove);
+    const newFavourites = favouritesLocalStorage.filter((obj: Film) => obj.id !== idToRemove);
     localStorage.setItem('favourites', JSON.stringify(newFavourites));  
 
     setFavouritesLocalStorage(newFavourites)
@@ -31,7 +31,7 @@ const FavouritePage = () => {
   }
   return (
     <main>
-      {favouritesLocalStorage?.map((film: any, index: any) => {
+      {favouritesLocalStorage?.map((film: Film, index: any) => {
         return (
           <div>
             ahahha

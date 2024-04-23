@@ -1,9 +1,9 @@
 import { listOfFilms } from "./api/hello";
 import { useRouter } from 'next/router';
 import { useState } from "react";
+import { Film, FilmList } from "@/types/types";
 
-
-export default function Home({filmList}:any) {
+export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
 
  
@@ -16,20 +16,20 @@ export default function Home({filmList}:any) {
     return <div>Error: {filmList.error}</div>;
   }
 
-  const handleClick = (id: string) => {
+  const handleClick = (id: number) => {
     router.push(`/details/${id}`);
   };
 
 
 
-   const doesObjectExist = (id: any, arr: any) => {
+   const doesObjectExist = (id: number, arr: any) => {
       if(!id) {
         return null
       }
-      return arr.some(obj => obj.id === id);
+      return arr.some((obj: Film) => obj.id === id);
   }
 
-  const addFavourites = async(ev: any, film: any) => {
+  const addFavourites = async(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, film: Film) => {
       ev.stopPropagation();
       let existingItemsJSON : any = [];
       if (typeof window !== 'undefined') {
@@ -39,7 +39,7 @@ export default function Home({filmList}:any) {
       const isFilmFavourite = doesObjectExist(film.id, existingFavourites);
       if(isFilmFavourite) {
         const idToRemove = film.id;
-        const newFavourites = existingFavourites.filter(obj => obj.id !== idToRemove);
+        const newFavourites = existingFavourites.filter((obj: Film) => obj.id !== idToRemove);
         localStorage.setItem('favourites', JSON.stringify(newFavourites));
       }
       else {
@@ -54,12 +54,11 @@ export default function Home({filmList}:any) {
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 `}
     >
-      {filmList?.map((film: any) => {
+      {filmList?.map((film: Film) => {
           console.log("filmlist", film)
           return (
             <div key={film.id} onClick={()=> handleClick(film.id)}>
-                  <button onClick={(e)=> addFavourites(e, film)}>Like this element</button>
-
+              <button onClick={(e)=> addFavourites(e, film)}>Like this element</button>
               <div>{film.title}</div>
               <div>{film.rating}</div>
               <div>{film.year}</div>
