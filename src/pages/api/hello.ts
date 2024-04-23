@@ -4,10 +4,14 @@ import type { NextApiRequest, NextApiResponse } from "next";
 type Data = {
   name: string;
 };
+export const listOfFilms = async () => {
+  let result = await fetch('https://private-2fff44-bncfetest.apiary-mock.com/movies');
+  const data = await result.json();
+  return data?.results || [];
+};
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>,
-) {
-  res.status(200).json({ name: "John Doe" });
+export const filmDetail = async(movieId: string) => {
+  let result = await fetch(`https://private-2fff44-bncfetest.apiary-mock.com/movies/${movieId}`);
+  const data = await result.json();
+  return data
 }
