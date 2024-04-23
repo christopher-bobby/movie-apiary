@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import { getFilmDetail } from '../api/hello';
+import Image from 'next/image';
 
 const Details = ({ filmDetail }: any) => {
     const router = useRouter()
 
-    const {desc, duration, genre, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail;
+    const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail;
 
 
 
@@ -29,7 +30,13 @@ const Details = ({ filmDetail }: any) => {
         </p>
         <p>{title}</p>
         <p>{year}</p>
-
+        <Image  
+                width={300}
+                height={300}
+                alt="film image"
+                src={imageUrl}
+              
+              />
         </div>
 
      </div>)

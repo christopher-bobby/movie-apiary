@@ -1,7 +1,8 @@
 import { listOfFilms } from "./api/hello";
 import { useRouter } from 'next/router';
 import { useState } from "react";
-import { Film, FilmList } from "@/types/types";
+import { Film } from "@/types/types";
+import Image from "next/image";
 
 export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
@@ -62,13 +63,13 @@ export default function Home({ filmList }: {filmList: any}) {
               <div>{film.title}</div>
               <div>{film.rating}</div>
               <div>{film.year}</div>
-              {/* <Image  
+              <Image  
                 width={300}
                 height={300}
                 alt="film image"
                 src={film.imageUrl}
               
-              /> */}
+              />
             </div>
            
 
