@@ -4,12 +4,20 @@ import { getFilmDetail } from '../api/hello';
 const Details = ({ filmDetail }: any) => {
     const router = useRouter()
 
-    const {desc, duration, genre, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail
+    const {desc, duration, genre, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail;
+
+
+
   return (
     <div>
          <button type="button" onClick={() => router.back()}>
       Click here to go back
     </button>
+
+
+
+
+        <div>
         <p>{desc}</p>
         <p>{duration}</p>
         <p>{genre}</p>
@@ -21,6 +29,8 @@ const Details = ({ filmDetail }: any) => {
         </p>
         <p>{title}</p>
         <p>{year}</p>
+
+        </div>
 
      </div>)
 
