@@ -1,6 +1,6 @@
 import { listOfFilms } from "./api/hello";
 import { useRouter } from 'next/router';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Film } from "@/types/types";
 import Image from "next/image";
 import Card from "antd/es/card/Card";
@@ -9,6 +9,7 @@ import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 
 export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
+  const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
 
   if (!filmList) {
     return <div>Loading...</div>;
@@ -18,11 +19,25 @@ export default function Home({ filmList }: {filmList: any}) {
     return <div>Error: {filmList.error}</div>;
   }
 
+  const handleScroll = () => {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (windowHeight + scrollTop >= documentHeight) {
+      setDisplayCount((prev)=> prev + 10)
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const handleClick = (id: number) => {
     router.push(`/details/${id}`);
   };
-
-
 
    const doesObjectExist = (id: number, arr: any) => {
       if(!id) {
@@ -56,10 +71,8 @@ export default function Home({ filmList }: {filmList: any}) {
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 `}
     >
-      {filmList?.map((film: Film) => {
-          console.log("filmlist", film)
+      {filmList?.slice(0, displayCount).map((film: Film) => {
           return (
-          
             <Card
               title={`${film.id}`}
               extra={<button onClick={()=>handleClick(film.id)}>More detail</button>}
@@ -80,7 +93,6 @@ export default function Home({ filmList }: {filmList: any}) {
               />
               <button onClick={(e)=> addFavourites(e, film)}><LikeOutlined style={{ color: 'red' }} /></button>
             </Card>
-
           )
         })}
     </main>
