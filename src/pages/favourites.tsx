@@ -33,7 +33,7 @@ const FavouritePage = () => {
     <main>
       {favouritesLocalStorage?.map((film: Film, index: any) => {
         return (
-          <div>
+          <div key={film.id}>
             ahahha
             <button onClick={(e)=> removeFromFavourites(e, film)}>Remove this element</button>
             <p>{film.title}</p>

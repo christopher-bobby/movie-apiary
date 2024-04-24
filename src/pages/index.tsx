@@ -11,14 +11,6 @@ export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
   const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
 
-  if (!filmList) {
-    return <div>Loading...</div>;
-  }
-
-  if (filmList.error) {
-    return <div>Error: {filmList.error}</div>;
-  }
-
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
@@ -28,13 +20,9 @@ export default function Home({ filmList }: {filmList: any}) {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+
+
   const handleClick = (id: number) => {
     router.push(`/details/${id}`);
   };
@@ -66,6 +54,22 @@ export default function Home({ filmList }: {filmList: any}) {
         localStorage.setItem('favourites', JSON.stringify(updatedItems));
       }
   }
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  if (!filmList) {
+    return <div>Loading...</div>;
+  }
+
+  if (filmList.error) {
+    return <div>Error: {filmList.error}</div>;
+  }
+
 
   return (
     <main
@@ -79,6 +83,7 @@ export default function Home({ filmList }: {filmList: any}) {
               style={{
                 width: 300,
               }}
+              key={film.id}
             >
               
               <div>{film.title}</div>

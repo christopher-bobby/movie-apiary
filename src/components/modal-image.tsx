@@ -1,4 +1,3 @@
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 import { useEffect } from 'react';
 import Image from 'next/image';
 
@@ -17,7 +16,7 @@ const ModalImage = ({imageLargeUrl, closeModal} : {imageLargeUrl: string, closeM
         return () => {
           document.removeEventListener('keydown', handleKeyDown);
         };
-      }, []); 
+      }, [closeModal]); 
 
   return (
     <div className="fixed w-full h-full z-1000 bg-gray" onClick={closeModal}>

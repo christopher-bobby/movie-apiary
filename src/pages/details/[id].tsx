@@ -7,9 +7,8 @@ import { FilmDetail } from '@/types/types';
 
 
 const Details = ({ filmDetail }: any) => {
-    const router = useRouter()
-
-    const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year}: FilmDetail = filmDetail;
+  const router = useRouter()
+  const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year}: FilmDetail = filmDetail;
   const [showModal, setShowModal] = useState(false)
 
 
@@ -29,7 +28,7 @@ const Details = ({ filmDetail }: any) => {
         <p>{rating}</p>
         <p>{releaseDate}</p>
         <p>{starring.map((star: string, index: any) => {
-            return <span>{star} </span>
+            return <span key={star}>{star} </span>
         })}
         </p>
         <p>{title}</p>
