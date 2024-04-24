@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
     const router = useRouter()
     const [showBurgerMenu, setShowBurgerMenu] = useState<boolean>(false);
-    const [currentLanguage, setCurrentLanguage] = useState('en');
+    const { changeLanguage } = useLanguage();
 
   const clickBurgerIcon = () => {
     setShowBurgerMenu(!showBurgerMenu)
   }
-  const changeLanguage = (e: any) => {
-    setCurrentLanguage(e.currentTarget.value)
-  }
-
+  const handleChangeLanguage = (e: any) => {
+    changeLanguage(e.currentTarget.value);
+  };
   return (
     <>
       <div className="sticky top-0 left-0 z-10 bg-black flex w-full px-6 py-4 items-center justify-between flex-3">
@@ -24,9 +24,9 @@ const Header = () => {
           alt="Star Wars Logo"
         />
         <div>
-        <select onChange={changeLanguage}>
-            <option value="en">English</option>
-            <option value="id">Bahasa Indonesia</option>
+        <select onChange={handleChangeLanguage}>
+            <option value="enLanguage">English</option>
+            <option value="idLanguage">Bahasa Indonesia</option>
         </select>
         </div>
         <div className="hidden md:flex">

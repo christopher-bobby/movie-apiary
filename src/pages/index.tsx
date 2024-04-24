@@ -5,11 +5,14 @@ import { Film } from "@/types/types";
 import Image from "next/image";
 import Card from "antd/es/card/Card";
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
-
+import { useLanguage } from "@/contexts/LanguageContext";
+import { idLanguage } from "@/translations/id";
+import { enLanguage } from "@/translations/en";
 
 export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
   const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
+  const { language } = useLanguage();
 
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
@@ -20,43 +23,40 @@ export default function Home({ filmList }: {filmList: any}) {
     }
   };
 
-
-
-
   const handleClick = (id: number) => {
     router.push(`/details/${id}`);
   };
 
-   const doesObjectExist = (id: number, arr: any) => {
-      if(!id) {
-        return null
-      }
-      return arr.some((obj: Film) => obj.id === id);
+  const doesObjectExist = (id: number, arr: any) => {
+    if(!id) {
+      return null
+    }
+    return arr.some((obj: Film) => obj.id === id);
   }
 
   const addFavourites = async(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, film: Film) => {
-      ev.stopPropagation();
-      let existingItemsJSON : any = [];
-      if (typeof window !== 'undefined') {
-        existingItemsJSON = localStorage.getItem('favourites') || []
-      }
-      const existingFavourites = existingItemsJSON.length ? JSON.parse(existingItemsJSON) : [];
-      const isFilmFavourite = doesObjectExist(film.id, existingFavourites);
-      if(isFilmFavourite) {
-        const idToRemove = film.id;
-        const newFavourites = existingFavourites.filter((obj: Film) => obj.id !== idToRemove);
-        localStorage.setItem('favourites', JSON.stringify(newFavourites));
-      }
-      else {
-        const updatedItems = [...existingFavourites];    
-        let newFave = {...film};
-        updatedItems.push(newFave);
-        localStorage.setItem('favourites', JSON.stringify(updatedItems));
-      }
+    ev.stopPropagation();
+    let existingItemsJSON : any = [];
+    if (typeof window !== 'undefined') {
+      existingItemsJSON = localStorage.getItem('favourites') || []
+    }
+    const existingFavourites = existingItemsJSON.length ? JSON.parse(existingItemsJSON) : [];
+    const isFilmFavourite = doesObjectExist(film.id, existingFavourites);
+    if(isFilmFavourite) {
+      const idToRemove = film.id;
+      const newFavourites = existingFavourites.filter((obj: Film) => obj.id !== idToRemove);
+      localStorage.setItem('favourites', JSON.stringify(newFavourites));
+    }
+    else {
+      const updatedItems = [...existingFavourites];    
+      let newFave = {...film};
+      updatedItems.push(newFave);
+      localStorage.setItem('favourites', JSON.stringify(updatedItems));
+    }
   }
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -69,12 +69,15 @@ export default function Home({ filmList }: {filmList: any}) {
   if (filmList.error) {
     return <div>Error: {filmList.error}</div>;
   }
+  const languageObject = language === 'enLanguage' ? enLanguage : idLanguage;
+  console.log("languageObject", languageObject)
 
-
+  
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 `}
     >
+      <h1>{languageObject.name}</h1>
       {filmList?.slice(0, displayCount).map((film: Film) => {
           return (
             <Card
