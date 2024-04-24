@@ -9,5 +9,6 @@ module.exports = {
       },
     ],
   },
+  transpilePackages: [ 'antd', '@ant-design', 'rc-util', 'rc-pagination', 'rc-picker', 'rc-notification', 'rc-tooltip' ],
   reactStrictMode: true,
 }

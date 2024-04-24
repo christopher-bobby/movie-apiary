@@ -3,11 +3,12 @@ import { useRouter } from 'next/router';
 import { useState } from "react";
 import { Film } from "@/types/types";
 import Image from "next/image";
+import Card from "antd/es/card/Card";
+import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
+
 
 export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
-
- 
 
   if (!filmList) {
     return <div>Loading...</div>;
@@ -58,8 +59,15 @@ export default function Home({ filmList }: {filmList: any}) {
       {filmList?.map((film: Film) => {
           console.log("filmlist", film)
           return (
-            <div key={film.id} onClick={()=> handleClick(film.id)}>
-              <button onClick={(e)=> addFavourites(e, film)}>Like this element</button>
+          
+            <Card
+              title={`${film.id}`}
+              extra={<button onClick={()=>handleClick(film.id)}>More detail</button>}
+              style={{
+                width: 300,
+              }}
+            >
+              
               <div>{film.title}</div>
               <div>{film.rating}</div>
               <div>{film.year}</div>
@@ -70,8 +78,8 @@ export default function Home({ filmList }: {filmList: any}) {
                 src={film.imageUrl}
               
               />
-            </div>
-           
+              <button onClick={(e)=> addFavourites(e, film)}><LikeOutlined style={{ color: 'red' }} /></button>
+            </Card>
 
           )
         })}
