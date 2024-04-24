@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -11,7 +11,7 @@ const Header = () => {
   const clickBurgerIcon = () => {
     setShowBurgerMenu(!showBurgerMenu)
   }
-  const handleChangeLanguage = (e: any) => {
+  const handleChangeLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
     changeLanguage(e.currentTarget.value);
   };
   return (

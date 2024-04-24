@@ -31,7 +31,7 @@ const FavouritePage = () => {
   }
   return (
     <main>
-      {favouritesLocalStorage?.map((film: Film, index: any) => {
+      {favouritesLocalStorage?.map((film: Film) => {
         return (
           <div key={film.id}>
             ahahha
