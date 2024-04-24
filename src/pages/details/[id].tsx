@@ -1,12 +1,16 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { getFilmDetail } from '../api/hello';
 import Image from 'next/image';
+import ModalImage from '@/components/modal-image';
+import { FilmDetail } from '@/types/types';
+
 
 const Details = ({ filmDetail }: any) => {
     const router = useRouter()
 
-    const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail;
-
+    const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year}: FilmDetail = filmDetail;
+  const [showModal, setShowModal] = useState(false)
 
 
   return (
@@ -15,7 +19,7 @@ const Details = ({ filmDetail }: any) => {
       Click here to go back
     </button>
 
-
+      {showModal && (<ModalImage imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)}
 
 
         <div>
@@ -35,6 +39,7 @@ const Details = ({ filmDetail }: any) => {
                 height={300}
                 alt="film image"
                 src={imageUrl}
+                onClick={()=>setShowModal(!showModal)}
               
               />
         </div>
