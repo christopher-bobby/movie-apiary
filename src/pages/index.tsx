@@ -14,6 +14,7 @@ export default function Home({ filmList }: {filmList: any}) {
   const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
   const { language } = useLanguage();
 
+
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
@@ -73,17 +74,18 @@ export default function Home({ filmList }: {filmList: any}) {
 
   
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 `}
+    <div
+      className="main-page-container"
     >
-      <h1>{languageObject.name}</h1>
-      {filmList?.slice(0, displayCount).map((film: Film) => {
-          return (
+      {/* <h1>{languageObject.name}</h1> */}
+      {filmList.slice(0, displayCount).map((film: Film) => {
+        return (
+          <div className="card-container">
             <Card
               title={`${film.id}`}
               extra={<button onClick={()=>handleClick(film.id)}>More detail</button>}
               style={{
-                width: 300,
+                width: '100%',
               }}
               key={film.id}
             >
@@ -92,17 +94,53 @@ export default function Home({ filmList }: {filmList: any}) {
               <div>{film.rating}</div>
               <div>{film.year}</div>
               <Image  
-                width={300}
-                height={300}
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: '100%', height: '300px' }}
                 alt="film image"
                 src={film.imageUrl}
               
               />
-              <button onClick={(e)=> addFavourites(e, film)}><LikeOutlined style={{ color: 'red' }} /></button>
+              <button onClick={(e)=> addFavourites(e, film)}>
+                <LikeOutlined style={{ color: 'red' }} /> Like 
+              </button>
             </Card>
-          )
-        })}
-    </main>
+          </div>
+        )
+       })}
+      <style jsx>{`
+
+        .main-page-container {
+          padding: 0 24px;
+          margin-top: 30px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .card-container {
+          padding: 0px 16px;
+          margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+          .card-container {
+            width: 50%;
+          }
+          .main-page-container {
+            flex-direction: row;
+            flex-wrap: wrap;
+          }  
+        }
+
+        @media (min-width: 992px) {
+          .card-container {
+            width: 25%;
+          }  
+        }
+      `}</style>
+     
+    </div>
   );
 }
 
