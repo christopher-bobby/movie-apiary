@@ -70,7 +70,6 @@ export default function Home({ filmList }: {filmList: any}) {
     return <div>Error: {filmList.error}</div>;
   }
   const languageObject = language === 'enLanguage' ? enLanguage : idLanguage;
-  console.log("languageObject", languageObject)
 
   
   return (
