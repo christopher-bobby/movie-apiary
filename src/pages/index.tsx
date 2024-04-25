@@ -12,8 +12,8 @@ import { enLanguage } from "@/translations/en";
 export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
   const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
+  const [favourites, setFavourites] = useState<number[]>([])
   const { language } = useLanguage();
-
 
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
@@ -37,22 +37,26 @@ export default function Home({ filmList }: {filmList: any}) {
 
   const addFavourites = async(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, film: Film) => {
     ev.stopPropagation();
-    let existingItemsJSON : any = [];
+    let existingItemsJSON : string | null = '';
     if (typeof window !== 'undefined') {
-      existingItemsJSON = localStorage.getItem('favourites') || []
+      existingItemsJSON = localStorage.getItem('favourites')
     }
-    const existingFavourites = existingItemsJSON.length ? JSON.parse(existingItemsJSON) : [];
+    const existingFavourites = existingItemsJSON?.length ? JSON.parse(existingItemsJSON) : [];
     const isFilmFavourite = doesObjectExist(film.id, existingFavourites);
     if(isFilmFavourite) {
       const idToRemove = film.id;
       const newFavourites = existingFavourites.filter((obj: Film) => obj.id !== idToRemove);
       localStorage.setItem('favourites', JSON.stringify(newFavourites));
+      const ids = newFavourites.map((obj: Film) => obj.id);
+      setFavourites(ids);
     }
     else {
       const updatedItems = [...existingFavourites];    
       let newFave = {...film};
       updatedItems.push(newFave);
       localStorage.setItem('favourites', JSON.stringify(updatedItems));
+      const ids = updatedItems.map((obj: Film) => obj.id);
+      setFavourites(ids);
     }
   }
 
@@ -61,6 +65,16 @@ export default function Home({ filmList }: {filmList: any}) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    let existingItemsJSON : string | null = '';
+    if (typeof window !== 'undefined') {
+      existingItemsJSON = localStorage.getItem('favourites')
+      const existingFavourites = existingItemsJSON?.length ? JSON.parse(existingItemsJSON) : [];
+      const ids = existingFavourites.map((obj: Film) => obj.id);
+      setFavourites(ids);
+    }
   }, []);
 
   if (!filmList) {
@@ -79,6 +93,7 @@ export default function Home({ filmList }: {filmList: any}) {
     >
       {/* <h1>{languageObject.name}</h1> */}
       {filmList.slice(0, displayCount).map((film: Film) => {
+     
         return (
           <div className="card-container">
             <Card
@@ -103,7 +118,7 @@ export default function Home({ filmList }: {filmList: any}) {
               
               />
               <button onClick={(e)=> addFavourites(e, film)}>
-                <LikeOutlined style={{ color: 'red' }} /> Like 
+                {!favourites?.includes(film.id) ? (<><LikeOutlined style={{ color: 'red' }} /> <span>Like me!</span></>) : (<><DislikeOutlined /> <span>Remove me</span></>)}
               </button>
             </Card>
           </div>

@@ -1,5 +1,8 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import { Film } from '@/types/types';
+import Card from "antd/es/card/Card";
+import Image from 'next/image';
+
 
 const FavouritePage = () => {
   let currentFavourites : SetStateAction<never[]> = [];
@@ -33,15 +36,39 @@ const FavouritePage = () => {
     <main>
       {favouritesLocalStorage?.map((film: Film) => {
         return (
-          <div key={film.id}>
-            ahahha
-            <button onClick={(e)=> removeFromFavourites(e, film)}>Remove this element</button>
-            <p>{film.title}</p>
-            <p>{film.rating}</p>
-            <p>{film.year}</p>
+          <div>
+          <button onClick={(e)=> removeFromFavourites(e, film)}>Remove this element</button>
+          <Card
+          title={`${film.id}`}
+          style={{
+            width: '100%',
+          }}
+          key={film.id}
+        >
+          
+          <div>{film.title}</div>
+          <div>{film.rating}</div>
+          <div>{film.year}</div>
+          <Image  
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: '100%', height: '300px' }}
+            alt="film image"
+            src={film.imageUrl}
+          
+          />
+
+        </Card>
           </div>
         )
       })}
+
+      <style jsx>{`
+        button {
+          font-size: 30px;
+        }
+      `}</style>
      </main>
   )
 };
