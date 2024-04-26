@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Image from "next/image";
@@ -9,7 +11,7 @@ import { enLanguage } from "@/translations/en";
 
 const Header = () => {
     const router = useRouter();
-    console.log("all router", router)
+    const pathname = usePathname();
     const [showBurgerMenu, setShowBurgerMenu] = useState<boolean>(false);
     const { language, changeLanguage } = useLanguage();
 
@@ -44,8 +46,8 @@ const Header = () => {
         </select>
         </div>
         <div className="desktop-menu">
-          <Link className="desktop-navlink" href={`/?language=${language}`}>{languageObject.movies}</Link>
-          <Link className="desktop-navlink" href={`/favourites?language=${language}`}>{languageObject.favourites}</Link>
+          <Link className={`desktop-navlink ${pathname == "/" && "active"}`} href={`/?language=${language}`}>{languageObject.movies}</Link>
+          <Link className={`desktop-navlink ${pathname == "/favourites" && "active"}`} href={`/favourites?language=${language}`}>{languageObject.favourites}</Link>
         </div>
    
 
@@ -57,8 +59,8 @@ const Header = () => {
 
        {showBurgerMenu && 
           <div className="mobile-menu">
-            <Link className="mobile-navlink" href="/">Movies</Link>
-            <Link className="mobile-navlink"  href='/favourites'>Favourite Movies</Link>
+            <Link className={`mobile-navlink ${pathname == "/" && "active"}`} href="/">Movies</Link>
+            <Link className={`mobile-navlink ${pathname == "/favourites" && "active"}`} href='/favourites'>Favourite Movies</Link>
           </div>
         }
 
@@ -81,7 +83,7 @@ const Header = () => {
             .mobile-menu { 
                 position: absolute;
                 left: 0px;
-                top: 92px;
+                top: 122px;
                 width: 100%;
                 padding: 8px 6px;
                 background: #333;
@@ -126,7 +128,7 @@ const Header = () => {
                 padding: 8px 0px;
             }
             .desktop-navlink {
-                color: #fff;
+                color: rgba(255, 255, 255, 0.8);
                 padding: 10px;
             }
             .desktop-navlink:after {
@@ -134,13 +136,16 @@ const Header = () => {
                 display: block;
                 margin: auto;
                 height: 3px;
-                width: 0px;
+                width: 0;
                 background: transparent;
                 transition: width .3s ease, background-color .3s ease;
             }
-            .desktop-navlink:hover:after {
+            .desktop-navlink:hover:after{
                 width: 100%;
                 background: rgba(255,255,255,0.8);
+            }
+            .active {
+              color: #fff;
             }
       `}</style>
       </div>

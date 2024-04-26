@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { Film } from "@/types/types";
 import Image from "next/image";
 import Card from "antd/es/card/Card";
-import { Button, Layout } from "antd";
+import { Button } from "antd";
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
+import MainContainer from "@/components/main-container";
+import Row from "@/components/row";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { idLanguage } from "@/translations/id";
 import { enLanguage } from "@/translations/en";
@@ -89,9 +91,9 @@ export default function Home({ filmList }: {filmList: any}) {
 
   
   return (
-    <div className="main-page-container">
-      <h1>{languageObject.explanation}</h1>
-      <div className="film-list">
+    <MainContainer>
+      <h1 className="explanation">{languageObject.explanation}</h1>
+      <Row>
         {filmList.slice(0, displayCount).map((film: Film) => {
       
           return (
@@ -123,42 +125,32 @@ export default function Home({ filmList }: {filmList: any}) {
             </div>
           )
         })}
-        <style jsx>{`
-
-          .main-page-container {
-            max-width: 1200px;
-            margin: auto;
-            margin-top: 30px;
-            
-          }
-          .film-list {
-            display: flex;
-            flex-direction: column;
-          }
+ 
+      </Row>
+      <style global jsx>{`
+        .explanation {
+          font-size: 24px;
+          margin-bottom: 20px;
+        }
+       
+        .card-container {
+          padding: 0px 16px;
+          margin-bottom: 24px;
+        }
+        @media (min-width: 768px) {
           .card-container {
-            padding: 0px 16px;
-            margin-bottom: 24px;
+            width: 50%;
           }
-          @media (min-width: 768px) {
-            .card-container {
-              width: 50%;
-            }
-            .film-list {
-              flex-direction: row;
-              flex-wrap: wrap;
-            }  
-          }
+        }
 
-          @media (min-width: 992px) {
-            .card-container {
-              width: 25%;
-            }  
-          }
-        `}</style>
-              
-      </div>
+        @media (min-width: 992px) {
+          .card-container {
+            width: 25%;
+          }  
+        }
+      `}</style>
     
-    </div>
+    </MainContainer>
   );
 }
 

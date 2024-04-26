@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { getFilmDetail } from '../api/hello';
 import Image from 'next/image';
 import { Button } from 'antd';
+import MainContainer from '@/components/main-container';
 import ModalImage from '@/components/modal-image';
 import { FilmDetail } from '@/types/types';
 
@@ -14,68 +15,59 @@ const Details = ({ filmDetail }: any) => {
 
 
   return (
-    <div>
-
-    <Button onClick={() => router.back()}>Click here to go back</Button>
-
+    <MainContainer>
+      <Button onClick={() => router.back()}>Click here to go back</Button>
       {showModal && (<ModalImage imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)}
-
-
-        <div>
-        <p>{desc}</p>
-        <p>{duration}</p>
-        <p>{genre}</p>
-        <p>{rating}</p>
-        <p>{releaseDate}</p>
-        <p>{starring.map((star: string, index: any) => {
-            return <span key={star}>{star} </span>
-        })}
-        </p>
-        <p>{title}</p>
-        <p>{year}</p>
-        <Image  
-                width={300}
-                height={300}
-                alt="film image"
-                src={imageUrl}
-                onClick={()=>setShowModal(!showModal)}
-              
-              />
-        </div>
-        <style jsx>{`
-          img:hover {
-            cursor: pointer;
-          }
-          p {
-          
-          }
-        `}</style>
-     </div>)
-
+      <div>
+      <p>{desc}</p>
+      <p>{duration}</p>
+      <p>{genre}</p>
+      <p>{rating}</p>
+      <p>{releaseDate}</p>
+      <p>{starring.map((star: string, index: any) => {
+          return <span key={star}>{star} </span>
+      })}
+      </p>
+      <p>{title}</p>
+      <p>{year}</p>
+      <Image  
+              width={300}
+              height={300}
+              alt="film image"
+              src={imageUrl}
+              onClick={()=>setShowModal(!showModal)}
+            
+            />
+      </div>
+      <style jsx>{`
+        img:hover {
+          cursor: pointer;
+        }
+     `}</style>
+    </MainContainer>
+  )
 };
 
 export default Details;
 
 
 export async function getServerSideProps(context: any) {
-    const id = context.params.id; // Access the ID from params
-    try {
-     
-        const filmDetail = await getFilmDetail(id)
-      
-        return {
-          props: {
-            id,
-            filmDetail,
-          },
-        };
-      } catch (error) {
-        return {
-          props: {
-            id,
-            filmDetail: { error: "There is error on our end" },
-          },
-        };
-      }
-  }
+  const id = context.params.id;
+  try {
+      const filmDetail = await getFilmDetail(id)
+      return {
+        props: {
+          id,
+          filmDetail,
+        },
+      };
+    } catch (error) {
+      return {
+        props: {
+          id,
+          filmDetail: { error: "There is error on our end" },
+        },
+      };
+    }
+}
   
