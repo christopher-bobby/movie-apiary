@@ -3,48 +3,56 @@ import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Image from "next/image";
+import { idLanguage } from "@/translations/id";
+import { enLanguage } from "@/translations/en";
+
 
 const Header = () => {
-    const router = useRouter()
+    const router = useRouter();
+    console.log("all router", router)
     const [showBurgerMenu, setShowBurgerMenu] = useState<boolean>(false);
-    const { changeLanguage } = useLanguage();
+    const { language, changeLanguage } = useLanguage();
 
   const clickBurgerIcon = () => {
     setShowBurgerMenu(!showBurgerMenu)
   }
   const handleChangeLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
     changeLanguage(e.currentTarget.value);
+    router.push(`/?language=${e.currentTarget.value}`)
   };
+
+  const languageObject = language === 'idLanguage' ? idLanguage : enLanguage;
+
+
   return (
     <>
       <div className="navbar">
+        <Link href="/">
         <Image
-          onClick={() => router.push("/")}
           src="https://www.freepnglogos.com/uploads/star-wars-logo-0.png"
-          className="lg:w-[200px] w-[100px] cursor-pointer"
-          width="200"
-          height="300"
+          className="movie-logo"
+          width="150"
+          height="250"
           alt="Movie Logo"
         />
-
+        </Link>
+       
         <div>
         <select onChange={handleChangeLanguage}>
             <option value="enLanguage">English</option>
-            <option value="idLanguage">Bahasa Indonesia</option>
+            <option value="idLanguage" selected={language === 'idLanguage'}>Bahasa Indonesia</option>
         </select>
         </div>
         <div className="desktop-menu">
-          <div className="flex lg:w-[300px]  w-[150px] justify-between">
-            <Link className="desktop-navlink" href="/">Movies</Link>
-            <Link className="desktop-navlink" href="/favourites">Favourite Movies</Link>
-          </div>
+          <Link className="desktop-navlink" href={`/?language=${language}`}>{languageObject.movies}</Link>
+          <Link className="desktop-navlink" href={`/favourites?language=${language}`}>{languageObject.favourites}</Link>
         </div>
    
 
         <div onClick={clickBurgerIcon} className="burger-icon">
-          <span className="block bg-white w-6 h-1"/>
-          <span className="block bg-white w-6 h-1 my-1"/>
-          <span className="block bg-white w-6 h-1"/>
+          <span />
+          <span />
+          <span />
         </div>
 
        {showBurgerMenu && 
@@ -67,6 +75,9 @@ const Header = () => {
                 width: 100%;
                 padding: 16px 24px;
             }
+            .movie-logo:hover {
+              cursor: pointer;
+            }
             .mobile-menu { 
                 position: absolute;
                 left: 0px;
@@ -84,10 +95,19 @@ const Header = () => {
             .desktop-menu {
                 display: none;
             }
-
+            .burger-icon span {
+              width: 32px;
+              height: 4px;
+              display: block;
+              background: #fff;
+            }
+            .burger-icon span:nth-child(2) {
+              margin: 4px 0px;
+            }
             @media (min-width: 768px) {
                 .desktop-menu {
-                    display: flex;
+                  display: flex;
+                  width: 500px;
                 }
                 .mobile-navlink {
                     display: none;
@@ -107,6 +127,7 @@ const Header = () => {
             }
             .desktop-navlink {
                 color: #fff;
+                padding: 10px;
             }
             .desktop-navlink:after {
                 content: '';

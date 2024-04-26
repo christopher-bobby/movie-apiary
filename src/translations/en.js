@@ -1,8 +1,5 @@
 export const enLanguage = {
-    "name": "John Doe Inggris",
-    "age": 30,
-    "address": {
-      "city": "New York",
-      "zipcode": "10001"
-    }
-  };
+    "explanation": "Bank Neo is a groundbreaking digital banking platform offering seamless online services, innovative financial products, and personalized experiences to customers.",
+    "movies": "Movies",
+    "favourites": "Favourite Movies"
+};

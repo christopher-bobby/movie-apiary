@@ -1,8 +1,5 @@
 export const idLanguage = {
-    "name": "John Doe Indo",
-    "age": 30,
-    "address": {
-      "city": "New York",
-      "zipcode": "10001"
-    }
+    "explanation": "Bank Neo adalah platform perbankan digital yang revolusioner yang menawarkan layanan online yang mulus, produk keuangan inovatif, dan pengalaman personalisasi kepada pelanggan.",
+    "movies": "Film",
+    "favourites": "Film Favorit"
 };

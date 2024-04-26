@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { getFilmDetail } from '../api/hello';
 import Image from 'next/image';
+import { Button } from 'antd';
 import ModalImage from '@/components/modal-image';
 import { FilmDetail } from '@/types/types';
 
@@ -14,9 +15,8 @@ const Details = ({ filmDetail }: any) => {
 
   return (
     <div>
-         <button type="button" onClick={() => router.back()}>
-      Click here to go back
-    </button>
+
+    <Button onClick={() => router.back()}>Click here to go back</Button>
 
       {showModal && (<ModalImage imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)}
 
@@ -42,7 +42,14 @@ const Details = ({ filmDetail }: any) => {
               
               />
         </div>
- 
+        <style jsx>{`
+          img:hover {
+            cursor: pointer;
+          }
+          p {
+          
+          }
+        `}</style>
      </div>)
 
 };
@@ -53,11 +60,9 @@ export default Details;
 export async function getServerSideProps(context: any) {
     const id = context.params.id; // Access the ID from params
     try {
-        // Fetch data using the ID from an API or other source
-        // For example:
+     
         const filmDetail = await getFilmDetail(id)
       
-        // Return both ID and data as props
         return {
           props: {
             id,
@@ -65,7 +70,6 @@ export async function getServerSideProps(context: any) {
           },
         };
       } catch (error) {
-        // Return error message as props
         return {
           props: {
             id,
