@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Film } from "@/types/types";
 import Image from "next/image";
 import Card from "antd/es/card/Card";
+import { Button } from "antd";
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { idLanguage } from "@/translations/id";
@@ -91,14 +92,14 @@ export default function Home({ filmList }: {filmList: any}) {
     <div
       className="main-page-container"
     >
-      {/* <h1>{languageObject.name}</h1> */}
+      <h1>{languageObject.name}</h1>
       {filmList.slice(0, displayCount).map((film: Film) => {
      
         return (
           <div className="card-container">
             <Card
               title={`${film.id}`}
-              extra={<button onClick={()=>handleClick(film.id)}>More detail</button>}
+              extra={<Button onClick={()=>handleClick(film.id)}>More detail</Button>}
               style={{
                 width: '100%',
               }}
@@ -132,12 +133,10 @@ export default function Home({ filmList }: {filmList: any}) {
           display: flex;
           flex-direction: column;
         }
-
         .card-container {
           padding: 0px 16px;
           margin-bottom: 24px;
         }
-
         @media (min-width: 768px) {
           .card-container {
             width: 50%;
@@ -154,7 +153,7 @@ export default function Home({ filmList }: {filmList: any}) {
           }  
         }
       `}</style>
-     
+             
     </div>
   );
 }

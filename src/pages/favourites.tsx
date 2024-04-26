@@ -2,7 +2,7 @@ import { useState, useEffect, SetStateAction } from 'react';
 import { Film } from '@/types/types';
 import Card from "antd/es/card/Card";
 import Image from 'next/image';
-
+import { Button } from 'antd';
 
 const FavouritePage = () => {
   let currentFavourites : SetStateAction<never[]> = [];
@@ -33,13 +33,16 @@ const FavouritePage = () => {
     return <div>Empty</div>
   }
   return (
-    <main>
+    <div className="main-page-container">
       {favouritesLocalStorage?.map((film: Film) => {
         return (
-          <div>
-          <button onClick={(e)=> removeFromFavourites(e, film)}>Remove this element</button>
+          <div className="card-container">
+        
           <Card
           title={`${film.id}`}
+          extra={  <Button type="primary" danger onClick={(e)=> removeFromFavourites(e, film)}>
+          Remove
+        </Button>}
           style={{
             width: '100%',
           }}
@@ -64,12 +67,35 @@ const FavouritePage = () => {
         )
       })}
 
-      <style jsx>{`
-        button {
-          font-size: 30px;
-        }
-      `}</style>
-     </main>
+<style jsx>{`
+
+.main-page-container {
+  padding: 0 24px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+.card-container {
+  padding: 0px 16px;
+  margin-bottom: 24px;
+}
+@media (min-width: 768px) {
+  .card-container {
+    width: 50%;
+  }
+  .main-page-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }  
+}
+
+@media (min-width: 992px) {
+  .card-container {
+    width: 25%;
+  }  
+}
+`}</style>
+     </div>
   )
 };
 
