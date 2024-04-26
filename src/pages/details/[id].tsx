@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { getFilmDetail } from '../api/hello';
+import { getFilmDetail } from '../api';
 import Image from 'next/image';
 import { Button } from 'antd';
 import MainContainer from '@/components/main-container';
@@ -51,14 +51,16 @@ const Details = ({ filmDetail }: any) => {
 export default Details;
 
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context : any) {
   const id = context.params.id;
+  const locale = context.locale;
   try {
       const filmDetail = await getFilmDetail(id)
       return {
         props: {
           id,
           filmDetail,
+          messages: (await import(`../../locale/${locale}.json`)).default
         },
       };
     } catch (error) {
@@ -66,8 +68,8 @@ export async function getServerSideProps(context: any) {
         props: {
           id,
           filmDetail: { error: "There is error on our end" },
+          messages: (await import(`../../locale/${locale}.json`)).default
         },
       };
     }
 }
-  

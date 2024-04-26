@@ -4,17 +4,20 @@ import Row from '@/components/row';
 import MainContainer from '@/components/main-container';
 import Card from "antd/es/card/Card";
 import Image from 'next/image';
+import { GetServerSidePropsContext } from "next";
+
 import { Button } from 'antd';
 
 const FavouritePage = () => {
   let currentFavourites : SetStateAction<never[]> = [];
   if (typeof window !== 'undefined') {
-    const existingFavourites = localStorage.getItem('favourites');
-    currentFavourites = JSON.parse(existingFavourites || '') || []
+    const existingFavourites = localStorage?.getItem('favourites');
+    if(existingFavourites) {
+      currentFavourites = (JSON?.parse(existingFavourites || '')) || []
+    }
   }
 
   const [favouritesLocalStorage, setFavouritesLocalStorage] = useState([]);
-  
   
   useEffect(()=> {
     setFavouritesLocalStorage(currentFavourites)
@@ -91,3 +94,20 @@ const FavouritePage = () => {
 };
 
 export default FavouritePage;
+export async function getServerSideProps({ locale }: GetServerSidePropsContext) {
+  try {
+  
+    return {
+      props: {
+        messages: (await import(`../locale/${locale}.json`)).default
+      },
+    };
+  } catch (error: any) {
+    // Return error as props
+    return {
+      props: {
+        messages: (await import(`../locale/${locale}.json`)).default
+      },
+    };
+  }
+}

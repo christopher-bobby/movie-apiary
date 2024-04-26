@@ -1,0 +1,12 @@
+{
+  "Index": {
+    "title": "Bank Neo Commerce adalah platform perbankan digital yang revolusioner yang menawarkan layanan online yang mulus, produk keuangan inovatif, dan pengalaman personalisasi kepada pelanggan.",
+    "description": "Moview Page"
+  },
+  "LocaleSwitcher": {
+    "switchLocale": "Switch to {locale, select, id {Indonesia} en {English} other {Unknown}}"
+  },
+  "PageLayout": {
+    "pageTitle": "Tes Indo"
+  }
+}

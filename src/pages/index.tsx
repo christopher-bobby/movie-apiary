@@ -1,4 +1,4 @@
-import { listOfFilms } from "./api/hello";
+import { listOfFilms } from "./api";
 import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
 import { Film } from "@/types/types";
@@ -8,15 +8,14 @@ import { Button } from "antd";
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
 import MainContainer from "@/components/main-container";
 import Row from "@/components/row";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { idLanguage } from "@/translations/id";
-import { enLanguage } from "@/translations/en";
+import { GetServerSidePropsContext } from "next";
+import { useTranslations } from "next-intl";
 
 export default function Home({ filmList }: {filmList: any}) {
   const router = useRouter();
   const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
   const [favourites, setFavourites] = useState<number[]>([])
-  const { language } = useLanguage();
+  const t = useTranslations('Index')
 
   const handleScroll = () => {
     const windowHeight = window.innerHeight;
@@ -87,15 +86,12 @@ export default function Home({ filmList }: {filmList: any}) {
   if (filmList.error) {
     return <div>Error: {filmList.error}</div>;
   }
-  const languageObject = language === 'enLanguage' ? enLanguage : idLanguage;
 
-  
   return (
     <MainContainer>
-      <h1 className="explanation">{languageObject.explanation}</h1>
+      <h1>{t('title')}</h1>
       <Row>
         {filmList.slice(0, displayCount).map((film: Film) => {
-      
           return (
             <div className="card-container" key={film.id}>
               <Card
@@ -125,36 +121,33 @@ export default function Home({ filmList }: {filmList: any}) {
             </div>
           )
         })}
- 
-      </Row>
-      <style global jsx>{`
-        .explanation {
-          font-size: 24px;
-          margin-bottom: 20px;
-        }
-       
-        .card-container {
-          padding: 0px 16px;
-          margin-bottom: 24px;
-        }
-        @media (min-width: 768px) {
-          .card-container {
-            width: 50%;
+        <style jsx>{`
+          h1 {
+            font-size: 16px;
+            margin-top: 30px;
           }
-        }
-
-        @media (min-width: 992px) {
           .card-container {
-            width: 25%;
-          }  
-        }
-      `}</style>
-    
+            margin: 0px 16px;
+            margin-bottom: 24px;
+          }
+          @media (min-width: 768px) {
+            .card-container {
+              width: calc(50% - 32px);
+            }
+          }
+
+          @media (min-width: 992px) {
+            .card-container {
+              width: calc(25% - 32px);
+            }  
+          }
+        `}</style>  
+      </Row>
     </MainContainer>
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ locale }: GetServerSidePropsContext) {
   try {
     // Fetch data from an API or other source
     const filmList = await listOfFilms()
@@ -163,6 +156,7 @@ export async function getServerSideProps() {
     return {
       props: {
         filmList,
+        messages: (await import(`../locale/${locale}.json`)).default
       },
     };
   } catch (error: any) {
@@ -170,8 +164,17 @@ export async function getServerSideProps() {
     return {
       props: {
         filmList: { error: "There is error on our end" },
+        messages: (await import(`../locale/${locale}.json`)).default
       },
     };
   }
 }
+
+// export async function getStaticProps({locale}: GetStaticPropsContext) {
+//   return {
+//     props: {
+//       messages: (await import(`../locale/${locale}.json`)).default
+//     }
+//   };
+// }
 
