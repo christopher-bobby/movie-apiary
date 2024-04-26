@@ -17,7 +17,6 @@ const Header = () => {
 
   const { locale, locales, route } = useRouter();
   const otherLocale = locales?.find((cur) => cur !== locale);
-  console.log("otherLocale", otherLocale, route)
   return (
     <>
       <div className="navbar">

@@ -1,7 +1,7 @@
 {
   "Index": {
     "title": "Bank Neo Commerce is a groundbreaking digital banking platform offering seamless online services, innovative financial products, and personalized experiences to customers.",
-    "description": "This is the home page."
+    "detail": "This is a great promising product, with annual return of 7% and protected by OJK, hence this is good for investment."
   },
   "LocaleSwitcher": {
     "switchLocale": "Switch to {locale, select, id {Indonesia} en {English} other {Unknown}}"

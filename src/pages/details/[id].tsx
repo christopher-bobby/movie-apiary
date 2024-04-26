@@ -6,16 +6,20 @@ import { Button } from 'antd';
 import MainContainer from '@/components/main-container';
 import ModalImage from '@/components/modal-image';
 import { FilmDetail } from '@/types/types';
+import { useTranslations } from "next-intl";
 
 
 const Details = ({ filmDetail }: any) => {
   const router = useRouter()
   const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year}: FilmDetail = filmDetail;
   const [showModal, setShowModal] = useState(false)
+  const t = useTranslations('Index')
 
 
   return (
     <MainContainer>
+      <h1>{t('detail')}</h1>
+
       <Button onClick={() => router.back()}>Click here to go back</Button>
       {showModal && (<ModalImage imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)}
       <div>
