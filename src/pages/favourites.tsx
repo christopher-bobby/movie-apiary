@@ -20,7 +20,7 @@ const FavouritePage = () => {
 
 
 
-  const removeFromFavourites = async(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, film: Film) => {
+  const removeFromFavourites = async(ev: React.MouseEvent<HTMLElement, MouseEvent>, film: Film) => {
     ev.stopPropagation();
     const idToRemove = film.id;
     const newFavourites = favouritesLocalStorage.filter((obj: Film) => obj.id !== idToRemove);
@@ -36,7 +36,7 @@ const FavouritePage = () => {
     <div className="main-page-container">
       {favouritesLocalStorage?.map((film: Film) => {
         return (
-          <div className="card-container">
+          <div className="card-container" key={film.id}>
         
           <Card
           title={`${film.id}`}
@@ -46,7 +46,6 @@ const FavouritePage = () => {
           style={{
             width: '100%',
           }}
-          key={film.id}
         >
           
           <div>{film.title}</div>

@@ -96,14 +96,13 @@ export default function Home({ filmList }: {filmList: any}) {
       {filmList.slice(0, displayCount).map((film: Film) => {
      
         return (
-          <div className="card-container">
+          <div className="card-container" key={film.id}>
             <Card
               title={`${film.id}`}
               extra={<Button onClick={()=>handleClick(film.id)}>More detail</Button>}
               style={{
                 width: '100%',
               }}
-              key={film.id}
             >
               
               <div>{film.title}</div>

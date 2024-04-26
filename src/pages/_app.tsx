@@ -9,13 +9,13 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <DefaultSeo
-        title="Your Website Title"
-        description="Your website description"
+        title="Bank Neo Commerce"
+        description="Best bank ever"
         canonical="https://example.com"
         openGraph={{
           url: 'https://example.com',
-          title: 'Your Website Title',
-          description: 'Your website description',
+          title: 'Bank Neo Commerce',
+          description: 'Best bank ever',
           images: [
             {
               url: 'https://example.com/og-image.jpg',
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
               alt: 'Og Image Alt',
             },
           ],
-          site_name: 'Your Website Name',
+          site_name: 'Bank Neo Commerce',
         }}
         twitter={{
           handle: '@handle',

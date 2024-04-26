@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Image from "next/image";
 
 const Header = () => {
     const router = useRouter()
@@ -17,12 +18,15 @@ const Header = () => {
   return (
     <>
       <div className="navbar">
-        <img
+        <Image
           onClick={() => router.push("/")}
           src="https://www.freepnglogos.com/uploads/star-wars-logo-0.png"
           className="lg:w-[200px] w-[100px] cursor-pointer"
-          alt="Star Wars Logo"
+          width="200"
+          height="300"
+          alt="Movie Logo"
         />
+
         <div>
         <select onChange={handleChangeLanguage}>
             <option value="enLanguage">English</option>
