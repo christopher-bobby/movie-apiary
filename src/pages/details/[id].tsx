@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import { StarFilled } from '@ant-design/icons';
 
 
-const Details = ({ filmDetail }: FilmDetail) => {
+const Details = ({ filmDetail }: {filmDetail : FilmDetail}) => {
   const router = useRouter()
   const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail;
   const [showModal, setShowModal] = useState(false)

@@ -4,7 +4,7 @@ import { Button } from "antd";
 import { DislikeOutlined, LikeOutlined, StarFilled } from '@ant-design/icons';
 
 const FilmCard = ({film, extra, addFavourites, favourites, showLikeButton = true}: any) => {
-
+    console.log("all things",  favourites)
     return (
         <div className="card-container" key={film.id}>
             <Card
