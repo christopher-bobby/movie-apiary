@@ -4,7 +4,7 @@
     "detail": "In a remote cabin, a group of friends faces a mysterious force while on a weekend getaway."
   },
   "LocaleSwitcher": {
-    "switchLocale": "Switch to {locale, select, id {Indonesia} en {English} other {Unknown}}"
+    "switchLocale": "Switch to {locale, select, id {Bahasa Indonesia} en {English} other {Unknown}}"
   },
   "PageLayout": {
     "pageTitle": "next-intl"

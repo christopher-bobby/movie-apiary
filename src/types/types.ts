@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export type Film  = {
     id: number;
     imageUrl: string;
@@ -17,4 +19,12 @@ export type FilmDetail = {
     starring: string[];
     title: string; 
     year: string;
+}
+
+export type FilmCardType = {
+    film: Film;
+    extra?: React.ReactNode;
+    favourites?: number[];
+    addFavourites?: MouseEventHandler<HTMLElement> | undefined;
+    showLikeButton?: boolean
 }

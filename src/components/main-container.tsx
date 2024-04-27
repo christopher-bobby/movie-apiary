@@ -1,4 +1,4 @@
-const MainContainer = ({children} : {children: any}) => {
+const MainContainer = ({children} : {children: React.ReactNode}) => {
     return (
       <div className='main-page-container'>
         {children}

@@ -4,7 +4,7 @@
     "detail": "Di sebuah pondok terpencil, sekelompok teman menghadapi kekuatan misterius saat liburan akhir pekan."
   },
   "LocaleSwitcher": {
-    "switchLocale": "Switch to {locale, select, id {Indonesia} en {English} other {Unknown}}"
+    "switchLocale": "Switch to {locale, select, id {Bahasa Indonesia} en {English} other {Unknown}}"
   },
   "PageLayout": {
     "pageTitle": "Tes Indo"

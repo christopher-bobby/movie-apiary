@@ -2,13 +2,14 @@ import Card from "antd/es/card/Card";
 import Image from "next/image";
 import { Button } from "antd";
 import { DislikeOutlined, LikeOutlined, StarFilled } from '@ant-design/icons';
+import { FilmCardType } from "../types/types";
 
-const FilmCard = ({film, extra, addFavourites, favourites, showLikeButton = true}: any) => {
-    console.log("all things",  favourites)
+const FilmCard = ({film, extra, addFavourites, favourites, showLikeButton = true}: FilmCardType) => {
+
     return (
         <div className="card-container" key={film.id}>
             <Card
-                title={`${film.id}`}
+                title={film.id}
                 extra={extra}
                 style={{
                     width: '100%',

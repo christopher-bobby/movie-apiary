@@ -15,7 +15,7 @@ const Header = () => {
  
   const t = useTranslations("LocaleSwitcher");
 
-  const { locale, locales, route, query, asPath } = useRouter();
+  const { locale, locales, asPath } = useRouter();
   const otherLocale = locales?.find((cur) => cur !== locale);
   return (
     <>

@@ -1,4 +1,4 @@
-const Row = ({children} : {children: any}) => {
+const Row = ({children} : {children: React.ReactNode}) => {
 
     return (
       <div className='row'>

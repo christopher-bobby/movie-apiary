@@ -7,9 +7,9 @@ import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  console.log(/x/, router)
-  return (
+  const { ...rest } = pageProps;
 
+  return (
     <>
       <DefaultSeo
         title="Movie List"
@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
         timeZone="Asia/Jakarta"
       >
         <Header />
-        <Component {...pageProps} />
+        <Component {...rest} />
       </NextIntlClientProvider>
     </>
   );
