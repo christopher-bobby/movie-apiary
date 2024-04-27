@@ -9,23 +9,26 @@ export type Film  = {
 }
 
 export type FilmDetail = {
-    desc:string;
-    duration: string;
-    genre: string; 
-    imageUrl: string; 
-    imageLargeUrl: string;
-    rating: string; 
-    releaseDate: string;
-    starring: string[];
-    title: string; 
-    year: string;
-    error?: string;
+    filmDetail: {
+        desc:string;
+        duration: string;
+        genre: string; 
+        imageUrl: string; 
+        imageLargeUrl: string;
+        rating: string; 
+        releaseDate: string;
+        starring: string[];
+        title: string; 
+        year: string;
+        error?: string;
+    },
+    error?: string
 }
 
 export type FilmCardType = {
     film: Film;
     extra?: React.ReactNode;
-    favourites?: number[];
+    favourites?: Film[];
     addFavourites?: MouseEventHandler<HTMLElement> | undefined;
     showLikeButton?: boolean
 }

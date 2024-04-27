@@ -7,8 +7,6 @@ import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const { ...rest } = pageProps;
-
 
   return (
     <>
@@ -42,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
         timeZone="Asia/Jakarta"
       >
         <Header />
-        <Component {...rest} />
+        <Component {...pageProps} />
       </NextIntlClientProvider>
     </>
   );

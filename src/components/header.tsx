@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -12,11 +12,14 @@ const Header = () => {
   const clickBurgerIcon = () => {
     setShowBurgerMenu(!showBurgerMenu);
   };
- 
-  const t = useTranslations("LocaleSwitcher");
 
-  const { locale, locales, asPath } = useRouter();
-  const otherLocale = locales?.find((cur) => cur !== locale);
+  const t = useTranslations("LocaleSwitcher");
+  const setCookie = (locale: string) => {
+    document.cookie = `NEXT_LOCALE=${locale}; max-age=31536000; path=/`;
+  };
+
+  const { locale, asPath } = useRouter();
+  const otherLocale = ["id", "en"].find((cur) => cur !== locale);
   return (
     <>
       <div className="navbar">
@@ -30,15 +33,34 @@ const Header = () => {
           />
         </Link>
 
-        <div>
-          <Link href={asPath} locale={otherLocale} className="locale">
-            {t("switchLocale", { locale: otherLocale })}
-          </Link>
-        </div>
+        {otherLocale && (
+          <div>
+            <Link
+              href={asPath}
+              locale={otherLocale}
+              className="locale"
+              onClick={() => setCookie(otherLocale)}
+            >
+              {t("switchLocale", { locale: otherLocale })}
+            </Link>
+          </div>
+        )}
 
         <div className="desktop-menu">
-          <Link className={`desktop-navlink ${pathname == "/" && "active"}`} href="/">Movies</Link>
-          <Link className={`desktop-navlink ${pathname == "/favourites" && "active"}`} href={"/favourites"}>Favourite Movies</Link>
+          <Link
+            className={`desktop-navlink ${pathname == "/" && "active"}`}
+            href="/"
+          >
+            Movies
+          </Link>
+          <Link
+            className={`desktop-navlink ${
+              pathname == "/favourites" && "active"
+            }`}
+            href={"/favourites"}
+          >
+            Favourite Movies
+          </Link>
         </div>
 
         <div onClick={clickBurgerIcon} className="burger-icon">
@@ -47,12 +69,24 @@ const Header = () => {
           <span />
         </div>
 
-        {showBurgerMenu && 
+        {showBurgerMenu && (
           <div className="mobile-menu">
-            <Link className={`mobile-navlink ${pathname == "/" && "active"}`} href="/">Movies</Link>
-            <Link className={`mobile-navlink ${pathname == "/favourites" && "active"}`} href='/favourites'>Favourite Movies</Link>
+            <Link
+              className={`mobile-navlink ${pathname == "/" && "active"}`}
+              href="/"
+            >
+              Movies
+            </Link>
+            <Link
+              className={`mobile-navlink ${
+                pathname == "/favourites" && "active"
+              }`}
+              href="/favourites"
+            >
+              Favourite Movies
+            </Link>
           </div>
-        }
+        )}
 
         <style jsx>{`
           .navbar {
@@ -60,19 +94,19 @@ const Header = () => {
             top: 0;
             left: 0;
             z-index: 6;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             display: flex;
             align-items: center;
             justify-content: space-between;
             width: 100%;
             padding: 16px 24px;
           }
-       
+
           .movie-logo:hover {
             cursor: pointer;
           }
 
-          .mobile-menu { 
+          .mobile-menu {
             position: absolute;
             left: 0px;
             top: 122px;
@@ -104,13 +138,12 @@ const Header = () => {
               width: 500px;
             }
             .mobile-navlink {
-                display: none;
-            }            
+              display: none;
+            }
             .burger-icon {
-                display: none;
+              display: none;
             }
           }
-        
         `}</style>
         <style global jsx>{`
           .mobile-navlink {
@@ -130,22 +163,22 @@ const Header = () => {
             font-size: 20px;
           }
           .desktop-navlink:after {
-            content: '';
+            content: "";
             display: block;
             margin: auto;
             height: 3px;
             width: 0;
             background: transparent;
-            transition: width .3s ease, background-color .3s ease;
+            transition: width 0.3s ease, background-color 0.3s ease;
           }
-          .desktop-navlink:hover:after{
+          .desktop-navlink:hover:after {
             width: 100%;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255, 255, 255, 0.8);
           }
           .active {
             color: #fff;
           }
-      `}</style>
+        `}</style>
       </div>
     </>
   );

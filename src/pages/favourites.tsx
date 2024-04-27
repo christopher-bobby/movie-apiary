@@ -1,40 +1,31 @@
-import { useState, useEffect, SetStateAction } from 'react';
 import { Film } from '@/types/types';
 import Row from '@/components/row';
 import MainContainer from '@/components/main-container';
 import FilmCard from '../components/film-card';
 import { Empty } from "antd";
 import { GetServerSidePropsContext } from "next";
-
 import { Button } from 'antd';
+import useLocalStorage from '@/hook/useLocalStorage';
+// import dynamic from "next/dynamic";
+
+
+// const Row = dynamic(() => import('../components/row'), { ssr: false })
+// const MainContainer = dynamic(() => import('../components/main-container'), { ssr: false })
+// const FilmCard = dynamic(() => import('../components/film-card'), { ssr: false })
 
 const FavouritePage = () => {
-  let currentFavourites : SetStateAction<never[]> = [];
-  if (typeof window !== 'undefined') {
-    const existingFavourites = localStorage?.getItem('favourites');
-    if(existingFavourites) {
-      currentFavourites = (JSON?.parse(existingFavourites || '')) || []
-    }
-  }
 
-  const [favouritesLocalStorage, setFavouritesLocalStorage] = useState([]);
-  
-  useEffect(()=> {
-    setFavouritesLocalStorage(currentFavourites)
-  },[])
-
-
+  const [favourites, setFavourites] = useLocalStorage<Film[]>('favourites', [])
 
   const removeFromFavourites = async(ev: React.MouseEvent<HTMLElement, MouseEvent>, film: Film) => {
     ev.stopPropagation();
     const idToRemove = film.id;
-    const newFavourites = favouritesLocalStorage.filter((obj: Film) => obj.id !== idToRemove);
-    localStorage.setItem('favourites', JSON.stringify(newFavourites));  
-
-    setFavouritesLocalStorage(newFavourites)
+    const newFavourites = favourites?.filter((obj: Film) => obj.id !== idToRemove);
+    setFavourites(newFavourites)
   }
 
-  if(!favouritesLocalStorage.length) {
+
+  if(!favourites?.length) {
     return (
       <div className="empty-placeholder">
         <Empty 
@@ -55,13 +46,13 @@ const FavouritePage = () => {
           }
         `}</style>
       </div>
-    )
+  )
   }
 
   return (
     <MainContainer>
       <Row>
-        {favouritesLocalStorage?.map((film: Film) => {
+        {favourites?.map((film: Film) => {
           return (
             <div className="card-container" key={film.id}>
               <FilmCard 
@@ -75,7 +66,6 @@ const FavouritePage = () => {
       </Row>
 
       <style jsx>{`
-     
         .card-container {
           padding: 0px 16px;
           margin-bottom: 24px;
@@ -83,13 +73,14 @@ const FavouritePage = () => {
 
         @media (min-width: 768px) {
           .card-container {
-            width: 50%;
+            width: calc(50% - 32px);
           }
         }
+
         @media (min-width: 992px) {
           .card-container {
-            width: 25%;
-          }  
+            width: calc(25% - 32px);
+          }
         }
       `}</style>
     </MainContainer>

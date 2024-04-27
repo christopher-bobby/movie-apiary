@@ -5,15 +5,15 @@ import Image from 'next/image';
 import { Button } from 'antd';
 import MainContainer from '@/components/main-container';
 import ModalImage from '@/components/modal-image';
-import { FilmDetail } from '@/types/types';
 import ErrorPage from '@/components/error-page';
+import { FilmDetail } from '@/types/types';
 import { useTranslations } from "next-intl";
 import { StarFilled } from '@ant-design/icons';
 
 
 const Details = ({ data }: { data : FilmDetail }) => {
   const router = useRouter()
-  const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = data;
+  const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = data.filmDetail;
   const [showModal, setShowModal] = useState(false)
   const t = useTranslations('Index')
 
@@ -35,10 +35,10 @@ const Details = ({ data }: { data : FilmDetail }) => {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: '100%', maxWidth: '400px', height: 'auto'}}
+            style={{ width: '100%',maxWidth: '400px', height: 'auto'}}
             onClick={()=>setShowModal(!showModal)}
           />
-          <ModalImage isOpen={showModal} imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />
+          <ModalImage isOpen={showModal} imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)
         </div>
 
         <div className="film-details">

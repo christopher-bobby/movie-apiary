@@ -1,9 +1,8 @@
 module.exports = {
   i18n: {
-    locales: ["en", "id"],
-    defaultLocale: "en",
+    locales: ["default", "en", "id"],
+    defaultLocale: "default",
     localeDetection: false,
-    localePrefix: "always",
   },
   images: {
     remotePatterns: [

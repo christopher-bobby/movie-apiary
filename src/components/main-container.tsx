@@ -1,8 +1,8 @@
-const MainContainer = ({children} : {children: React.ReactNode}) => {
-    return (
-      <div className='main-page-container'>
-        {children}
-        <style jsx>{`
+const MainContainer = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="main-page-container">
+      {children}
+      <style jsx>{`
         .main-page-container {
           max-width: 1400px;
           min-height: 100vh;
@@ -13,15 +13,14 @@ const MainContainer = ({children} : {children: React.ReactNode}) => {
         }
 
         @media (min-width: 768px) {
-            .main-page-container {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }  
+          .main-page-container {
+            flex-direction: row;
+            flex-wrap: wrap;
+          }
         }
       `}</style>
-      </div>
-    )
+    </div>
+  );
 };
-  
+
 export default MainContainer;
-  
