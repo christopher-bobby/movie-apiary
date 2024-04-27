@@ -15,7 +15,7 @@ const Header = () => {
  
   const t = useTranslations("LocaleSwitcher");
 
-  const { locale, locales, route } = useRouter();
+  const { locale, locales, route, query, asPath } = useRouter();
   const otherLocale = locales?.find((cur) => cur !== locale);
   return (
     <>
@@ -31,7 +31,7 @@ const Header = () => {
         </Link>
 
         <div>
-          <Link href={route} locale={otherLocale} className="locale">
+          <Link href={asPath} locale={otherLocale} className="locale">
             {t("switchLocale", { locale: otherLocale })}
           </Link>
         </div>
