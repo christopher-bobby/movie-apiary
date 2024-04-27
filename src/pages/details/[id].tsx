@@ -30,10 +30,10 @@ const Details = ({ filmDetail }: {filmDetail : FilmDetail}) => {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: '100%', height: 'auto'}}
+            style={{ width: '100%',maxWidth: '400px', height: 'auto'}}
             onClick={()=>setShowModal(!showModal)}
           />
-          {showModal && (<ModalImage imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)}
+          <ModalImage isOpen={showModal} imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)
         </div>
 
         <div className="film-details">
@@ -44,7 +44,7 @@ const Details = ({ filmDetail }: {filmDetail : FilmDetail}) => {
           <p><span className="semibold-text">Genre:</span> {genre}</p>
           <p><span className="semibold-text">Rating:</span> <StarFilled style={{ color: "#FDDA0D" }} /> {rating}</p>
           <p><span className="semibold-text">Release date:</span> {releaseDate}</p>
-          <p><span className="semibold-text">Stars:</span> {starring.map((star: string, index: any) => {
+          <p><span className="semibold-text">Stars:</span> {starring.map((star: string, index: number) => {
               return <span key={star}>{star}{index < starring.length - 1 && ","} </span>
           })}
           </p>

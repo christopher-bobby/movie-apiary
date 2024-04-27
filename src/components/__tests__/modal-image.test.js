@@ -6,6 +6,7 @@ describe('ModalImage', ()=> {
     test('should render one image', () => {
         let { container } = render(
             <ModalImage 
+                isOpen={true}
                 imageLargeUrl={"/imageUrl"} 
                 closeModal={jest.fn()}
             />)

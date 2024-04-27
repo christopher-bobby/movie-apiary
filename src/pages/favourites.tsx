@@ -3,8 +3,6 @@ import { Film } from '@/types/types';
 import Row from '@/components/row';
 import MainContainer from '@/components/main-container';
 import FilmCard from '../components/film-card';
-import Card from "antd/es/card/Card";
-import Image from 'next/image';
 import { Empty } from "antd";
 import { GetServerSidePropsContext } from "next";
 

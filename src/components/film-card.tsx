@@ -12,7 +12,7 @@ const FilmCard = ({film, extra, addFavourites, favourites, showLikeButton = true
                 title={film.id}
                 extra={extra}
                 style={{
-                    width: '100%',
+                    width: '100%'
                 }}
             >
             
