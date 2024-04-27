@@ -39,7 +39,7 @@ const ModalImage = ({isOpen, imageLargeUrl, closeModal} : {isOpen: boolean,image
         width={0}
         height={0}
         sizes="100vw"
-        style={{ width: '100%',maxWidth: '600px', height: 'auto'}}
+        style={{ height: '100%', maxHeight: '900px', width: 'auto'}}
         alt="film image large"
         src={imageLargeUrl}        
       />      

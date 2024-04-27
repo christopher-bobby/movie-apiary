@@ -19,6 +19,7 @@ export type FilmDetail = {
     starring: string[];
     title: string; 
     year: string;
+    error?: string;
 }
 
 export type FilmCardType = {
@@ -27,4 +28,9 @@ export type FilmCardType = {
     favourites?: number[];
     addFavourites?: MouseEventHandler<HTMLElement> | undefined;
     showLikeButton?: boolean
+}
+
+export type InitialData = {
+    filmList: Film[];
+    error?: string;
 }

@@ -9,6 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const { ...rest } = pageProps;
 
+
   return (
     <>
       <DefaultSeo

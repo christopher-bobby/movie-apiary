@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import { Film } from "@/types/types";
 import FilmCard from "../components/film-card";
 import MainContainer from "@/components/main-container";
+import ErrorPage from "@/components/error-page";
 import { Button } from "antd";
 import Row from "@/components/row";
+import { InitialData } from "@/types/types";
 import { GetServerSidePropsContext } from "next";
 import { useTranslations } from "next-intl";
 
-export default function Home({ filmList }: {filmList: any}) {
+export default function Home({ data } : { data: InitialData }) {
   const router = useRouter();
   const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
   const [favourites, setFavourites] = useState<number[]>([])
@@ -77,19 +79,15 @@ export default function Home({ filmList }: {filmList: any}) {
     }
   }, []);
 
-  if (!filmList) {
-    return <div>Loading...</div>;
-  }
-
-  if (filmList.error) {
-    return <div>Error: {filmList.error}</div>;
+  if (data?.error) {
+    return <MainContainer><ErrorPage /></MainContainer>;
   }
 
   return (
     <MainContainer>
       <h1>{t('title')}</h1>
       <Row>
-        {filmList.slice(0, displayCount).map((film: Film) => {
+        {data.filmList.slice(0, displayCount).map((film: Film) => {
           return (
             <div className="card-container" key={film.id}>
               <FilmCard 
@@ -137,7 +135,9 @@ export async function getServerSideProps({ locale }: GetServerSidePropsContext) 
     // Return data as props
     return {
       props: {
-        filmList,
+        data: {
+          filmList
+        },
         messages: (await import(`../locale/${locale}.json`)).default
       },
     };
@@ -145,7 +145,7 @@ export async function getServerSideProps({ locale }: GetServerSidePropsContext) 
     // Return error as props
     return {
       props: {
-        filmList: { error: "There is error on our end" },
+        data: { error: "There is error on our end" },
         messages: (await import(`../locale/${locale}.json`)).default
       },
     };

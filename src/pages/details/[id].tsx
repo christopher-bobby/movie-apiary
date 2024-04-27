@@ -6,16 +6,21 @@ import { Button } from 'antd';
 import MainContainer from '@/components/main-container';
 import ModalImage from '@/components/modal-image';
 import { FilmDetail } from '@/types/types';
+import ErrorPage from '@/components/error-page';
 import { useTranslations } from "next-intl";
 import { StarFilled } from '@ant-design/icons';
 
 
-const Details = ({ filmDetail }: {filmDetail : FilmDetail}) => {
+const Details = ({ data }: { data : FilmDetail }) => {
   const router = useRouter()
-  const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail;
+  const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = data;
   const [showModal, setShowModal] = useState(false)
   const t = useTranslations('Index')
 
+
+  if (data?.error) {
+    return <MainContainer><ErrorPage /></MainContainer>;
+  }
 
   return (
     <MainContainer>
@@ -30,10 +35,10 @@ const Details = ({ filmDetail }: {filmDetail : FilmDetail}) => {
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: '100%',maxWidth: '400px', height: 'auto'}}
+            style={{ width: '100%', maxWidth: '400px', height: 'auto'}}
             onClick={()=>setShowModal(!showModal)}
           />
-          <ModalImage isOpen={showModal} imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)
+          <ModalImage isOpen={showModal} imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />
         </div>
 
         <div className="film-details">
@@ -96,7 +101,9 @@ export async function getServerSideProps(context : any) {
       return {
         props: {
           id,
-          filmDetail,
+          data: {
+            filmDetail
+          },
           messages: (await import(`../../locale/${locale}.json`)).default
         },
       };
@@ -104,7 +111,7 @@ export async function getServerSideProps(context : any) {
       return {
         props: {
           id,
-          filmDetail: { error: "There is error on our end" },
+          data: { error: "There is error on our end" },
           messages: (await import(`../../locale/${locale}.json`)).default
         },
       };
