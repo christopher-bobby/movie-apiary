@@ -12,22 +12,22 @@ export default function App({ Component, pageProps }: AppProps) {
 
     <>
       <DefaultSeo
-        title="Bank Neo Commerce"
-        description="Best bank ever"
+        title="Movie List"
+        description="Best movies ever"
         canonical="https://example.com"
         openGraph={{
           url: "https://example.com",
-          title: "Bank Neo Commerce",
-          description: "Best bank ever",
+          title: "Mobie List",
+          description: "Best movies ever",
           images: [
             {
               url: "https://example.com/og-image.jpg",
               width: 1200,
               height: 630,
-              alt: "Og Image Alt",
+              alt: "Image Alt",
             },
           ],
-          site_name: "Bank Neo Commerce",
+          site_name: "Movie List",
         }}
         twitter={{
           handle: "@handle",

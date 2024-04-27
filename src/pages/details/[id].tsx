@@ -7,45 +7,78 @@ import MainContainer from '@/components/main-container';
 import ModalImage from '@/components/modal-image';
 import { FilmDetail } from '@/types/types';
 import { useTranslations } from "next-intl";
+import { StarFilled } from '@ant-design/icons';
 
 
-const Details = ({ filmDetail }: any) => {
+const Details = ({ filmDetail }: FilmDetail) => {
   const router = useRouter()
-  const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year}: FilmDetail = filmDetail;
+  const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = filmDetail;
   const [showModal, setShowModal] = useState(false)
   const t = useTranslations('Index')
 
 
   return (
     <MainContainer>
-      <h1>{t('detail')}</h1>
+      <Button onClick={() => router.push("/")}>Click here to go back</Button>
 
-      <Button onClick={() => router.back()}>Click here to go back</Button>
-      {showModal && (<ModalImage imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)}
-      <div>
-      <p>{desc}</p>
-      <p>{duration}</p>
-      <p>{genre}</p>
-      <p>{rating}</p>
-      <p>{releaseDate}</p>
-      <p>{starring.map((star: string, index: any) => {
-          return <span key={star}>{star} </span>
-      })}
-      </p>
-      <p>{title}</p>
-      <p>{year}</p>
-      <Image  
-              width={300}
-              height={300}
-              alt="film image"
-              src={imageUrl}
-              onClick={()=>setShowModal(!showModal)}
-            
-            />
+      <h1>{t('detail')}</h1>
+      <div className="flex-desktop">
+        <div className="image-container">
+          <Image  
+            alt="film image"
+            src={imageUrl}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: '100%', height: 'auto'}}
+            onClick={()=>setShowModal(!showModal)}
+          />
+          {showModal && (<ModalImage imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)}
+        </div>
+
+        <div className="film-details">
+          <p className='film-title'>{title}</p>
+          <p className='description'>{desc}</p>
+          <p><span className="semibold-text">Year published:</span> <span>{year}</span></p>
+          <p><span className="semibold-text">Duration:</span> {duration}</p>
+          <p><span className="semibold-text">Genre:</span> {genre}</p>
+          <p><span className="semibold-text">Rating:</span> <StarFilled style={{ color: "#FDDA0D" }} /> {rating}</p>
+          <p><span className="semibold-text">Release date:</span> {releaseDate}</p>
+          <p><span className="semibold-text">Stars:</span> {starring.map((star: string, index: any) => {
+              return <span key={star}>{star}{index < starring.length - 1 && ","} </span>
+          })}
+          </p>
+        </div>
       </div>
+  
+
       <style jsx>{`
-        img:hover {
+        .image-container {
+          margin-top: 20px;
           cursor: pointer;
+        }
+        .film-title {
+          font-size: 22px;
+          font-weight: 600;
+        }
+        .semibold-text {
+          font-weight: 600;
+        }
+        .film-details {
+          font-size: 20px;
+        }
+        @media (min-width: 768px) {
+          .flex-desktop {
+            display: flex;
+            flex-direction: row;
+          }
+          .image-container {
+            padding-right: 30px;
+            width: 50%;
+          }
+          .film-details {
+            width: 50%;
+          }
         }
      `}</style>
     </MainContainer>

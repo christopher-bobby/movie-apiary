@@ -1,7 +1,7 @@
 const MainContainer = ({children} : {children: any}) => {
     return (
       <div className='main-page-container'>
-          {children}
+        {children}
         <style jsx>{`
         .main-page-container {
           max-width: 1400px;

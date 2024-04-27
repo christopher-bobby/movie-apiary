@@ -2,11 +2,9 @@ import { listOfFilms } from "./api";
 import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
 import { Film } from "@/types/types";
-import Image from "next/image";
-import Card from "antd/es/card/Card";
-import { Button } from "antd";
-import { DislikeOutlined, LikeOutlined } from '@ant-design/icons';
+import FilmCard from "../components/film-card";
 import MainContainer from "@/components/main-container";
+import { Button } from "antd";
 import Row from "@/components/row";
 import { GetServerSidePropsContext } from "next";
 import { useTranslations } from "next-intl";
@@ -26,7 +24,7 @@ export default function Home({ filmList }: {filmList: any}) {
     }
   };
 
-  const handleClick = (id: number) => {
+  const handlMoreDetailClick = (id: number) => {
     router.push(`/details/${id}`);
   };
 
@@ -94,30 +92,12 @@ export default function Home({ filmList }: {filmList: any}) {
         {filmList.slice(0, displayCount).map((film: Film) => {
           return (
             <div className="card-container" key={film.id}>
-              <Card
-                title={`${film.id}`}
-                extra={<Button onClick={()=>handleClick(film.id)}>More detail</Button>}
-                style={{
-                  width: '100%',
-                }}
-              >
-                
-                <div>{film.title}</div>
-                <div>{film.rating}</div>
-                <div>{film.year}</div>
-                <Image  
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={{ width: '100%', height: '300px' }}
-                  alt="film image"
-                  src={film.imageUrl}
-                
-                />
-                <button onClick={(e)=> addFavourites(e, film)}>
-                  {!favourites?.includes(film.id) ? (<><LikeOutlined style={{ color: 'red' }} /> <span>Like me!</span></>) : (<><DislikeOutlined /> <span>Remove me</span></>)}
-                </button>
-              </Card>
+              <FilmCard 
+                film={film}
+                extra={<Button onClick={()=>handlMoreDetailClick(film.id)}>More detail</Button>}
+                addFavourites={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=> addFavourites(e, film)}
+                favourites={favourites}
+              />
             </div>
           )
         })}
@@ -126,10 +106,12 @@ export default function Home({ filmList }: {filmList: any}) {
             font-size: 16px;
             margin-top: 30px;
           }
+          
           .card-container {
             margin: 0px 16px;
             margin-bottom: 24px;
           }
+
           @media (min-width: 768px) {
             .card-container {
               width: calc(50% - 32px);

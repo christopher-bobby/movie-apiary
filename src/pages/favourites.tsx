@@ -2,8 +2,10 @@ import { useState, useEffect, SetStateAction } from 'react';
 import { Film } from '@/types/types';
 import Row from '@/components/row';
 import MainContainer from '@/components/main-container';
+import FilmCard from '../components/film-card';
 import Card from "antd/es/card/Card";
 import Image from 'next/image';
+import { Empty } from "antd";
 import { GetServerSidePropsContext } from "next";
 
 import { Button } from 'antd';
@@ -35,49 +37,52 @@ const FavouritePage = () => {
   }
 
   if(!favouritesLocalStorage.length) {
-    return <div>Empty</div>
+    return (
+      <div className="empty-placeholder">
+        <Empty 
+          imageStyle={{ height: 300 }}
+          description={
+            <span className="empty-placeholder-text">
+              No favourite movies? Add one!
+            </span>
+          } 
+        />
+        <style jsx>{`
+          .empty-placeholder {
+            margin-top: 40px;
+          }
+          .empty-placeholder-text {
+            font-size: 26px;
+            margin-top: 10px;
+          }
+        `}</style>
+      </div>
+    )
   }
+
   return (
     <MainContainer>
       <Row>
         {favouritesLocalStorage?.map((film: Film) => {
           return (
             <div className="card-container" key={film.id}>
-          
-            <Card
-            title={`${film.id}`}
-            extra={  <Button type="primary" danger onClick={(e)=> removeFromFavourites(e, film)}>
-            Remove
-          </Button>}
-            style={{
-              width: '100%',
-            }}
-          >
-            
-            <div>{film.title}</div>
-            <div>{film.rating}</div>
-            <div>{film.year}</div>
-            <Image  
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: '100%', height: '300px' }}
-              alt="film image"
-              src={film.imageUrl}
-            
-            />
-
-          </Card>
+              <FilmCard 
+                film={film}
+                extra={<Button type="primary" danger onClick={(e)=> removeFromFavourites(e, film)}>Remove</Button>}
+                showLikeButton={false}
+              />
             </div>
           )
         })}
       </Row>
 
       <style jsx>{`
+     
         .card-container {
           padding: 0px 16px;
           margin-bottom: 24px;
         }
+
         @media (min-width: 768px) {
           .card-container {
             width: 50%;
@@ -94,6 +99,7 @@ const FavouritePage = () => {
 };
 
 export default FavouritePage;
+
 export async function getServerSideProps({ locale }: GetServerSidePropsContext) {
   try {
   
