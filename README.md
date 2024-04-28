@@ -2,16 +2,19 @@
 - Design a website that has 3 pages: movies list, movie detail, and a favourite page.
 - Use React / Next and TS for the solution and antd for design library.
 - Make it responsive, along with hardcoded translation, in addition of SSR & SEO.
+- Pagination will be done on client side and faked per 10 data fetch.
+- CSS in JS is done via Styled JSX.
+- Tests are done using react-testing-library.
+
 
 ## Getting Started
 
-Dev node version: 18.7.0
-Dev npm version: 9.6.7
+-Dev node version: 18.7.0
+-Dev npm version: 9.6.7
 
 First, to install run:  
 ```
 npm install
-
 ```
 To build, run:
 ```
