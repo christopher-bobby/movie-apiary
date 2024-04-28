@@ -1,17 +1,11 @@
 import { Film } from '@/types/types';
-import Row from '@/components/row';
 import MainContainer from '@/components/main-container';
+import Row from '@/components/row';
 import FilmCard from '../components/film-card';
 import { Empty } from "antd";
 import { GetServerSidePropsContext } from "next";
 import { Button } from 'antd';
 import useLocalStorage from '@/hook/useLocalStorage';
-// import dynamic from "next/dynamic";
-
-
-// const Row = dynamic(() => import('../components/row'), { ssr: false })
-// const MainContainer = dynamic(() => import('../components/main-container'), { ssr: false })
-// const FilmCard = dynamic(() => import('../components/film-card'), { ssr: false })
 
 const FavouritePage = () => {
 
@@ -23,7 +17,6 @@ const FavouritePage = () => {
     const newFavourites = favourites?.filter((obj: Film) => obj.id !== idToRemove);
     setFavourites(newFavourites)
   }
-
 
   if(!favourites?.length) {
     return (
@@ -39,6 +32,7 @@ const FavouritePage = () => {
         <style jsx>{`
           .empty-placeholder {
             margin-top: 40px;
+            margin-bottom: 100px;
           }
           .empty-placeholder-text {
             font-size: 26px;
@@ -46,7 +40,7 @@ const FavouritePage = () => {
           }
         `}</style>
       </div>
-  )
+    )
   }
 
   return (
@@ -64,7 +58,6 @@ const FavouritePage = () => {
           )
         })}
       </Row>
-
       <style jsx>{`
         .card-container {
           padding: 0px 16px;

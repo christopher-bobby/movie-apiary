@@ -1,19 +1,17 @@
 import { GetServerSidePropsContext } from "next";
 import { listOfFilms } from "./api";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Film } from "@/types/types";
 import FilmCard from "../components/film-card";
 import ErrorPage from "@/components/error-page";
 import MainContainer from "@/components/main-container";
-import { Button } from "antd";
+import Link from "next/link";
 import Row from "@/components/row";
 import { InitialData } from "@/types/types";
 import { useTranslations } from "next-intl";
 import useLocalStorage from "@/hook/useLocalStorage";
 
 export default function Home({ data } : { data: InitialData }) {
-  const router = useRouter();
   const [displayCount, setDisplayCount] = useState(10); // fetch first 10 from client (fake pagination)
   const [favourites, setFavourites] = useLocalStorage<any[]>("favourites", []);
   const t = useTranslations("Index");
@@ -27,9 +25,6 @@ export default function Home({ data } : { data: InitialData }) {
     }
   };
 
-  const handlMoreDetailClick = (id: number) => {
-    router.push(`/details/${id}`);
-  };
 
   const doesObjectExist = (id: number, arr: any) => {
     if (!id) {
@@ -79,9 +74,9 @@ export default function Home({ data } : { data: InitialData }) {
               <FilmCard
                 film={film}
                 extra={
-                  <Button onClick={() => handlMoreDetailClick(film.id)}>
+                  <Link href={`/details/${film.id}`} className="more-detail">
                     More detail
-                  </Button>
+                  </Link>
                 }
                 addFavourites={(
                   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -91,15 +86,22 @@ export default function Home({ data } : { data: InitialData }) {
             </div>
           );
         })}
-        <style jsx>{`
+        <style global jsx>{`
           h1 {
-            font-size: 16px;
             margin-top: 30px;
+            margin-bottom: 22px;
           }
-
           .card-container {
             margin: 0px 16px;
             margin-bottom: 24px;
+          }
+
+          .more-detail {
+            color: #5799ef;
+            font-size: 16px;
+          }
+          .more-detail:hover {
+            border-bottom: 1px solid #5799ef;
           }
 
           @media (min-width: 768px) {

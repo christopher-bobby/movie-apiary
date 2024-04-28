@@ -4,7 +4,7 @@ import {
   useCallback,
   useState,
   useRef,
-  useLayoutEffect,
+  useEffect,
 } from "react";
 
 // const isBrowser = typeof window !== "undefined";
@@ -69,7 +69,7 @@ const useLocalStorage = <T>(
   }, [key, setState]);
 
 
-  useLayoutEffect(() => setState(initializer.current(key)), [key]);
+  useEffect(() => setState(initializer.current(key)), [key]);
 
   return [state, set, remove];
 };

@@ -1,18 +1,16 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { getFilmDetail } from '../api';
 import Image from 'next/image';
-import { Button } from 'antd';
+import Link from "next/link";
 import MainContainer from '@/components/main-container';
 import ModalImage from '@/components/modal-image';
 import ErrorPage from '@/components/error-page';
 import { FilmDetail } from '@/types/types';
 import { useTranslations } from "next-intl";
 import { StarFilled } from '@ant-design/icons';
-
+import { UserOutlined } from '@ant-design/icons';
 
 const Details = ({ data }: { data : FilmDetail }) => {
-  const router = useRouter()
   const {desc, duration, genre,imageUrl, imageLargeUrl, rating, releaseDate, starring, title, year} = data.filmDetail;
   const [showModal, setShowModal] = useState(false)
   const t = useTranslations('Index')
@@ -24,7 +22,7 @@ const Details = ({ data }: { data : FilmDetail }) => {
 
   return (
     <MainContainer>
-      <Button onClick={() => router.push("/")}>Click here to go back</Button>
+      <Link href={"/"} className="go-back">Click here to go back</Link>
 
       <h1>{t('detail')}</h1>
       <div className="flex-desktop">
@@ -38,26 +36,36 @@ const Details = ({ data }: { data : FilmDetail }) => {
             style={{ width: '100%',maxWidth: '400px', height: 'auto'}}
             onClick={()=>setShowModal(!showModal)}
           />
-          <ModalImage isOpen={showModal} imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />)
+          <ModalImage isOpen={showModal} imageLargeUrl = {imageLargeUrl} closeModal={()=> setShowModal(!showModal)} />
         </div>
 
         <div className="film-details">
           <p className='film-title'>{title}</p>
           <p className='description'>{desc}</p>
-          <p><span className="semibold-text">Year published:</span> <span>{year}</span></p>
-          <p><span className="semibold-text">Duration:</span> {duration}</p>
-          <p><span className="semibold-text">Genre:</span> {genre}</p>
-          <p><span className="semibold-text">Rating:</span> <StarFilled style={{ color: "#FDDA0D" }} /> {rating}</p>
-          <p><span className="semibold-text">Release date:</span> {releaseDate}</p>
-          <p><span className="semibold-text">Stars:</span> {starring.map((star: string, index: number) => {
-              return <span key={star}>{star}{index < starring.length - 1 && ","} </span>
+          <div className="labels">Year published: <span>{year}</span></div>
+          <div className="labels">Duration: <span>{duration}</span></div>
+          <div className="labels">Genre: <span>{genre}</span></div>
+          <div className="labels">Rating: <StarFilled style={{ color: "#FDDA0D" }} /> <span>{rating}</span></div>
+          <div className="labels">Release date: <span>{releaseDate}</span></div>
+          <div className="labels">Top cast:</div>
+          <div className="starring">{starring.map((star: string) => {
+              return <span key={star} style={{marginRight: '10px'}}> <UserOutlined style={{ color: "#A9A9A9" , padding: '6px', border: '1px solid #A9A9A9', borderRadius: '20px', marginRight: '6px', marginTop: '10px' }} />{star}</span>
           })}
-          </p>
+          </div>
         </div>
       </div>
   
 
-      <style jsx>{`
+      <style global jsx>{`
+        .go-back {
+          color: #5799ef;
+          font-size: 20px;
+          text-decoration: none;
+          padding-bottom: 4px;
+        }
+        .go-back:hover {
+          border-bottom: 1px solid #5799ef;
+        }
         .image-container {
           margin-top: 20px;
           cursor: pointer;
@@ -71,6 +79,21 @@ const Details = ({ data }: { data : FilmDetail }) => {
         }
         .film-details {
           font-size: 20px;
+        }
+        .labels {
+          margin-bottom: 30px;
+          font-size: 28px;
+          font-weight: 600;
+          border-left: 4px solid #f5c518;
+          padding-left: 10px;
+          text-transform: capitalize;
+        }
+        .labels span {
+          font-weight: 400;
+          font-size: 22px;
+        }
+        .starring {
+          text-transform: capitalize;
         }
         @media (min-width: 768px) {
           .flex-desktop {

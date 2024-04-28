@@ -7,7 +7,7 @@ const FavButton: FC<{
   onAddFavourite?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }> = ({ isFavorite, onAddFavourite }) => {
   return (
-    <Button onClick={onAddFavourite}>
+    <Button onClick={onAddFavourite} style={{border: 'none', boxShadow: 'none', outline: 'none', fontSize: '16px', paddingLeft: '0px'}}>
       {isFavorite ? (
         <>
           <LikeOutlined style={{ color: "#1F51FF" }} /> <span>Like me!</span>

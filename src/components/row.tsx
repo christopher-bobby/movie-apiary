@@ -1,7 +1,7 @@
 const Row = ({children} : {children: React.ReactNode}) => {
 
     return (
-      <div className='row'>
+      <div className='row' suppressHydrationWarning>
           {children}
           <style jsx>{`
               .row {

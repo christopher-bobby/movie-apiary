@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { DefaultSeo } from "next-seo";
 import { NextIntlClientProvider } from "next-intl";
 import { useRouter } from "next/router";
@@ -40,7 +41,8 @@ export default function App({ Component, pageProps }: AppProps) {
         timeZone="Asia/Jakarta"
       >
         <Header />
-        <Component {...pageProps} />
+          <Component {...pageProps} />
+        <Footer />
       </NextIntlClientProvider>
     </>
   );
